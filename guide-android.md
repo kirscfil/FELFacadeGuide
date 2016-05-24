@@ -2,6 +2,8 @@
 
 ##Motivation
 
+[TBD]
+
 ##Before you start
 
 First, you need to get a copy of [Android Studio](https://developer.android.com/studio/install.html) application. This guide is made on Android Studio for Mac, but controls on Windows version are analogical.
