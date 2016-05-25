@@ -90,4 +90,15 @@ in `onCreate()` function we added in previous step? That's where the magic will 
 
 ###How the communication with facade works
 
+The API of Light Facade is a [REST](https://cs.wikipedia.org/wiki/Representational_State_Transfer) API. Therefore to send a command to the facade, you simply need to call a HTTP URL in correct format. Easiest way to work with the facade is to use `lights/all/` endpoint. This endpoint requires four `GET` parameters to be passed into it, namely `r` as *red*, `g` as *green*, `b` as *blue* and `w` as *white*. All of these parameters are on scale 0 - 255 and set the intensity of corresponding channel on *all lights on facade*. Example of a valid `lights/all/` call on server running locally on address `192.168.1.97` would therefore be
+
+```
+http://192.168.1.97:3000/lights/all?r=68&g=146&b=4&w=0
+```
+
+###Changing facade colour on button click
+
+
+
+
 [TBD]
