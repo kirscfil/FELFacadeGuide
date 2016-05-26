@@ -60,13 +60,13 @@ As we already have a button, we may want to react if the user presses it. This c
 
 ```
 Button testButton = (Button) findViewById(R.id.testButton);
-        if (testButton != null) {
-            testButton.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    //Test the connection to facade here!
-                }
-            });
-        }
+  if (testButton != null) {
+    testButton.setOnClickListener(new View.OnClickListener(){
+      public void onClick(View v){
+        //Test the connection to facade here!
+      }
+    });
+}
 ```
 
 The moment you paste the code many lines will alertly flick with red-ish colours to indicate that something's wrong. To solve all issues, just add following under the line `import android.os.Bundle;`:
@@ -90,7 +90,7 @@ in `onCreate()` function we added in previous step? That's where the magic will 
 
 ###How the communication with facade works
 
-The API of Light Facade is a [REST](https://cs.wikipedia.org/wiki/Representational_State_Transfer) API. Therefore to send a command to the facade, you simply need to call a HTTP URL in correct format. Easiest way to work with the facade is to use `lights/all/` endpoint. This endpoint requires four `GET` parameters to be passed into it, namely `r` as *red*, `g` as *green*, `b` as *blue* and `w` as *white*. All of these parameters are on scale 0 - 255 and set the intensity of corresponding channel on *all lights on facade*. Example of a valid `lights/all/` call on server running locally on address `192.168.1.97` would therefore be
+The API of Light Facade is a [REST](https://cs.wikipedia.org/wiki/Representational_State_Transfer) API. Therefore to send a command to the facade, you simply need to call a HTTP URL in correct format. Easiest way to work with the facade is to use `lights/all/` endpoint. This endpoint requires four `GET` parameters to be passed into it, namely `r` as *red*, `g` as *green*, `b` as *blue* and `w` as *white*. All of these parameters are on scale 0 - 255 and set the intensity of corresponding channel on *all lights on facade*. Example of a valid `lights/all/` call on server running on local network address `192.168.1.97` would therefore be
 
 ```
 http://192.168.1.97:3000/lights/all?r=68&g=146&b=4&w=0
@@ -98,7 +98,40 @@ http://192.168.1.97:3000/lights/all?r=68&g=146&b=4&w=0
 
 ###Changing facade colour on button click
 
+The basic android code for calling a URL is as simple as this:
 
+```
+try {
+  URL url = new URL("http://192.168.1.97:3000/lights/all?r=68&g=146&b=4&w=0");
+  HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+} catch (Exception e) {
+  e.printStackTrace();
+}
+```
 
+But it wouldn't be an Android, if there were not two small complications. First you need to add following two lines to import part of our code
 
-[TBD]
+```
+import java.net.HttpURLConnection;
+import java.net.URL;
+```
+
+And to allow any communication with the internet whatsoever, we need to add
+
+```
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+just above the application tag in your `manifest.xml` file. You can find the file almost at the top of the project navigator. If everything's right, your `manifest.xml` should look like this:
+
+![](./images/permission.png)
+
+##Running the application
+
+To run the application, just click on the play button on the top. A simple wizzard will pop right up and guide you through either deployment on device or running in the simulator.
+
+##Summary
+
+You have successfully implemented an Android app that tests the connection to the lighting facade. Good job!
+
+In case of doubt, the full source code is also available in this repository.
